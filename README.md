@@ -16,7 +16,6 @@ if (typeof(hash) !== 'undefined'){_paq.push(['setCustomVariable','1','U',hash,'v
 ```
 Resultant tracking code
 ```javascript
-
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
