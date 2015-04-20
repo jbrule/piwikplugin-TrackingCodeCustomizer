@@ -1,0 +1,17 @@
+{
+    "TrackingCodeCustomizer": {
+        "PluginDescription":"The provided values will replace the defaults in the generated tracking code (leave blank to use defaults). Viewing https://github.com/piwik/piwik/blob/master/core/Tracker/TrackerCodeGenerator.php is recommended to deconstruct how the tracking code is built.",
+        "idSiteSettingTitle":"idSite",
+        "idSiteSettingDescription":"The siteId that will be included in the tracking code.",
+        "protocolSettingTitle":"protocol",
+        "protocolSettingDescription":"Piwik url protocol.",
+        "piwikUrlSettingTitle":"piwikUrl",
+        "piwikUrlSettingDescription":"The tracker URL to use.",
+        "httpsPiwikUrlSettingTitle":"httpsPiwikUrl",
+        "httpsPiwikUrlSettingDescription":"Set if the HTTPS domain is different from the normal domain.",
+        "optionsSettingTitle":"options",
+        "optionsSettingDescription":"A string of JavaScript code that customizes the JavaScript tracker (after _paq = _paq || [] and before trackPageView).",
+        "optionsBeforeTrackerUrlSettingTitle":"optionsBeforeTrackerUrl",
+        "optionsBeforeTrackerUrlSettingDescription":"A string of Javascript code that customizes the JavaScript tracker inside of anonymous function before adding setTrackerUrl into paq."
+    }
+}
