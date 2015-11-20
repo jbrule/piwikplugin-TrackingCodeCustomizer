@@ -34,6 +34,7 @@ _paq.push(['setTrackerUrl', u+'piwik.php']);
 ```
 
 ##Changelog
+0.1.2 Updated for compatibility with Piwik v2.15 and included new registerEvents() hook for compatibility with Piwik 3.0
 0.1.1 Version bump to activation Marketplace hook
 0.1.0 Initial Release
 

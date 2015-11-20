@@ -36,12 +36,22 @@ namespace Piwik\Plugins\TrackingCodeCustomizer;
 
 class TrackingCodeCustomizer extends \Piwik\Plugin
 {
-        public function getListHooksRegistered()
-    {
-        $hooks = array(
+    private static $hooks = array(
             'Piwik.getJavascriptCode' => 'applyTrackingCodeCustomizations'
         );
-        return $hooks;
+    
+    //2.15 includes a new function for registering hooks. 2.15 wi
+    public function registerEvents()
+    {
+        return self::$hooks;
+    }
+    
+    //Pre 2.15 hook registration. Will be removed in Piwik 3. Kept for backwards compatibility with 2.12.
+    //Pre ver3 will still call this in addition to registerEvents.
+    //From reviewing the Piwik source this shouldn't be an issue as the hooks are not additive and this call will just overwrite the registerEvents call.
+    public function getListHooksRegistered()
+    {
+        return self::$hooks;
     }
     
     /*
@@ -61,7 +71,7 @@ class TrackingCodeCustomizer extends \Piwik\Plugin
     *        @key bool customCampaignKeywordParam
     *        @key bool doNotTrack
     **/
-    public function applyTrackingCodeCustomizations($sysparams,$parameters){
+    public function applyTrackingCodeCustomizations(&$sysparams,$parameters){
         
         $originalSysparams = $sysparams;
         
@@ -69,11 +79,11 @@ class TrackingCodeCustomizer extends \Piwik\Plugin
         
         $storedSettings = $settings->getSettings();
         
-        if($storedSettings["options"])
-            $storedSettings["options"] .= $sysparams["options"];
-        
-        if($storedSettings["optionsBeforeTrackerUrl"])
-            $storedSettings["optionsBeforeTrackerUrl"] .=$sysparams["optionsBeforeTrackerUrl"];
+        if(array_key_exists("options", $storedSettings))
+                $storedSettings["options"] .= $sysparams["options"];
+
+        if(array_key_exists("optionsBeforeTrackerUrl", $storedSettings))
+                $storedSettings["optionsBeforeTrackerUrl"] .=$sysparams["optionsBeforeTrackerUrl"];
         
         $sysparams = array_merge($sysparams,$storedSettings);
         
