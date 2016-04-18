@@ -12,6 +12,14 @@
         "optionsSettingTitle":"options",
         "optionsSettingDescription":"A string of JavaScript code that customizes the JavaScript tracker (after _paq = _paq || [] and before trackPageView).",
         "optionsBeforeTrackerUrlSettingTitle":"optionsBeforeTrackerUrl",
-        "optionsBeforeTrackerUrlSettingDescription":"A string of Javascript code that customizes the JavaScript tracker inside of anonymous function before adding setTrackerUrl into paq."
+        "optionsBeforeTrackerUrlSettingDescription":"A string of Javascript code that customizes the JavaScript tracker inside of anonymous function before adding setTrackerUrl into paq.",
+        "piwikJsSettingTitle": "piwik.js Filename",
+        "piwikJsSettingDescription": "Let's you customize the piwik.js Filename, don't forget to create a rewrite accordingly.",
+        "piwikPhpSettingTitle": "piwik.php Filename",
+        "piwikPhpSettingDescription": "Let's you customize the piwik.php Filename, don't forget to create a rewrite accordingly.",
+        "paqVariableSettingTitle": "Name for _paq in Javascript tracking code",
+        "paqVariableSettingDescription": "Let's you customize the _paq JS Variable in your tracking code",
+        "removePiwikBrandingSettingTitle": "Remove PIWIK branking in tracking code",
+        "removePiwikBrandingSettingDescription": "Removed the name PIWIK out of the comments in the code"
     }
 }

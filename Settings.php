@@ -14,6 +14,10 @@ class Settings extends \Piwik\Plugin\Settings
     public $optionsBeforeTrackerUrl;
     public $httpsPiwikUrl;
     public $protocol;
+    public $piwikJs;
+    public $piwikPhp;
+    public $paqVariable;
+    public $removePiwikBranding;
     
     protected function init()
     {
@@ -77,6 +81,54 @@ class Settings extends \Piwik\Plugin\Settings
         $this->httpsPiwikUrl->inlineHelp = 'secure-tracker.example.com/piwik use hostname+basepath only (omit protocol and trailing slash)';
         
         $this->addSetting($this->httpsPiwikUrl);
+
+
+        $this->piwikJs = new SystemSetting('piwikJs', $this->t('piwikJsSettingTitle'));
+        $this->piwikJs->type  = static::TYPE_STRING;
+        $this->piwikJs->uiControlType = static::CONTROL_TEXT;
+        $this->piwikJs->uiControlAttributes = $default_textbox_size;
+        $this->piwikJs->description   = $this->t('piwikJsSettingDescription');
+        $this->piwikJs->readableByCurrentUser = true;
+        $this->piwikJs->defaultValue  = "";
+        $this->piwikJs->inlineHelp = 'alternative name for piwik.js in Javascript tracking code';
+
+        $this->addSetting($this->piwikJs);
+
+
+        $this->piwikPhp = new SystemSetting('piwikPhp', $this->t('piwikPhpSettingTitle'));
+        $this->piwikPhp->type  = static::TYPE_STRING;
+        $this->piwikPhp->uiControlType = static::CONTROL_TEXT;
+        $this->piwikPhp->uiControlAttributes = $default_textbox_size;
+        $this->piwikPhp->description   = $this->t('piwikPhpSettingDescription');
+        $this->piwikPhp->readableByCurrentUser = true;
+        $this->piwikPhp->defaultValue  = "";
+        $this->piwikPhp->inlineHelp = 'alternative name for piwik.php in Javascript tracking code';
+
+        $this->addSetting($this->piwikPhp);
+
+
+        $this->paqVariable = new SystemSetting('paqVariable', $this->t('paqVariableSettingTitle'));
+        $this->paqVariable->type  = static::TYPE_STRING;
+        $this->paqVariable->uiControlType = static::CONTROL_TEXT;
+        $this->paqVariable->uiControlAttributes = $default_textbox_size;
+        $this->paqVariable->description   = $this->t('paqVariableSettingDescription');
+        $this->paqVariable->readableByCurrentUser = true;
+        $this->paqVariable->defaultValue  = "";
+        $this->paqVariable->inlineHelp = 'alternative name for _paq';
+
+        $this->addSetting($this->paqVariable);
+
+
+        $this->removePiwikBranding = new SystemSetting('removePiwikBranding', $this->t('removePiwikBrandingSettingTitle'));
+        $this->removePiwikBranding->type  = static::TYPE_BOOL;
+        $this->removePiwikBranding->uiControlType = static::CONTROL_CHECKBOX;
+        $this->removePiwikBranding->description   = $this->t('removePiwikBrandingSettingDescription');
+        $this->removePiwikBranding->readableByCurrentUser = true;
+        $this->removePiwikBranding->defaultValue  = "";
+        $this->removePiwikBranding->inlineHelp = 'Remove Piwik branding in comments';
+
+        $this->addSetting($this->removePiwikBranding);
+
         
         $this->options = new SystemSetting('options', $this->t('optionsSettingTitle'));
         $this->options->type  = static::TYPE_STRING;
