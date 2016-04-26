@@ -11,7 +11,7 @@ class API extends \Piwik\Plugin\API
     {
         $outParams = array();
         
-        $params = array("idSite","piwikUrl","options","optionsBeforeTrackerUrl","httpsPiwikUrl","protocol");
+        $params = array("idSite","piwikUrl","options","optionsBeforeTrackerUrl","httpsPiwikUrl","protocol","piwikJs", "piwikPhp","paqVariable","removePiwikBranding");
         
         $settings = new Settings(self::$plugin_name);
         

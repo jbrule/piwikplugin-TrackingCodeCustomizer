@@ -37,7 +37,11 @@ namespace Piwik\Plugins\TrackingCodeCustomizer;
 class TrackingCodeCustomizer extends \Piwik\Plugin
 {
     private static $hooks = array(
-            'Piwik.getJavascriptCode' => 'applyTrackingCodeCustomizations'
+            'Piwik.getJavascriptCode' => 'applyTrackingCodeCustomizations',
+            'Controller.CoreAdminHome.setPluginSettings.end' => 'rewriteJavascriptFiles',
+            'API.SitesManager.getJavascriptTag.end' => 'rewriteJavascriptTag',
+            'Controller.SitesManager.siteWithoutData.end' => 'rewriteJavascriptTag',
+            'CoreUpdater.update.end' => 'afterUpdate'
         );
     
     //2.15 includes a new function for registering hooks. 2.15 wi
@@ -74,29 +78,121 @@ class TrackingCodeCustomizer extends \Piwik\Plugin
     public function applyTrackingCodeCustomizations(&$sysparams,$parameters){
         
         $originalSysparams = $sysparams;
+        $storedSettings = $this->getSettings();
         
-        $settings = API::getInstance();
-        
-        $storedSettings = $settings->getSettings();
-        
-        if(array_key_exists("options", $storedSettings))
-                $storedSettings["options"] .= $sysparams["options"];
+        if(array_key_exists("options", $storedSettings)) {
+            $storedSettings["options"] .= $sysparams["options"];
+        }
 
-        if(array_key_exists("optionsBeforeTrackerUrl", $storedSettings))
-                $storedSettings["optionsBeforeTrackerUrl"] .=$sysparams["optionsBeforeTrackerUrl"];
-        
-        $sysparams = array_merge($sysparams,$storedSettings);
+        if(array_key_exists("optionsBeforeTrackerUrl", $storedSettings)) {
+            $storedSettings["optionsBeforeTrackerUrl"] .= $sysparams["optionsBeforeTrackerUrl"];
+        }
+
+        $sysparams = array_merge($sysparams, $storedSettings);
         
         foreach($sysparams as $key => $value){
-            
             $sysparams[$key] =  $this->replaceTokens($value,$originalSysparams,$sysparams);
         }
     
     }
-    
+
+    /**
+     * @param $subject
+     * @param $originalSysparams
+     * @param $sysparams
+     * @return mixed
+     */
     private function replaceTokens($subject,$originalSysparams,$sysparams){
         $output = str_replace(array_map(function($item){return '{$original_'.$item.'}';},array_keys($originalSysparams)),array_values($originalSysparams),$subject);
         $output = str_replace(array_map(function($item){return '{$'.$item.'}';},array_keys($sysparams)),array_values($sysparams),$output);
         return $output;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSettings() {
+        $settings = API::getInstance();
+        $storedSettings = $settings->getSettings();
+        return $storedSettings;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTrackingCodeFile() {
+        return $trackingCodeFile = PIWIK_INCLUDE_PATH . "/piwik.js";
+    }
+
+    /**
+     *
+     */
+    public function afterUpdate() {
+
+        // cleanup old original file
+        $oldOriginalCodeFile = $this->getTrackingCodeFile() . ".original";
+        if(file_exists($oldOriginalCodeFile)) {
+            unlink($oldOriginalCodeFile);
+        }
+
+        $this->rewriteJavascriptFiles();
+    }
+
+    /**
+     *
+     */
+    public function rewriteJavascriptFiles() {
+        $trackingCodeFile = $this->getTrackingCodeFile();
+
+        if(is_writeable($trackingCodeFile)) {
+            $trackingCodeFileOriginal = $trackingCodeFile . ".original";
+
+            if (!file_exists($trackingCodeFileOriginal)) {
+                copy($trackingCodeFile, $trackingCodeFileOriginal);
+            }
+
+            $trackingCode = file_get_contents($trackingCodeFileOriginal);
+
+            $settings = $this->getSettings();
+
+            if (array_key_exists("paqVariable", $settings)) {
+                $trackingCode = str_replace("_paq", $settings["paqVariable"], $trackingCode);
+            }
+
+            if (array_key_exists("piwikJs", $settings)) {
+                $trackingCode = str_replace("piwik.js", $settings["piwikJs"], $trackingCode);
+            }
+
+            if (array_key_exists("piwikPhp", $settings)) {
+                $trackingCode = str_replace("piwik.php", $settings["piwikPhp"], $trackingCode);
+            }
+
+            file_put_contents($trackingCodeFile, $trackingCode);
+        }
+    }
+
+    /**
+     * @param $result
+     * @param $parameters
+     */
+    public function rewriteJavascriptTag(&$result, $parameters) {
+
+        $settings = $this->getSettings();
+
+        if(array_key_exists("paqVariable", $settings)) {
+            $result = str_replace("_paq", $settings["paqVariable"], $result);
+        }
+
+        if(array_key_exists("piwikJs", $settings)) {
+            $result = str_replace("piwik.js", $settings["piwikJs"], $result);
+        }
+
+        if(array_key_exists("piwikPhp", $settings)) {
+            $result = str_replace("piwik.php", $settings["piwikPhp"], $result);
+        }
+
+        if(array_key_exists("removePiwikBranding", $settings)) {
+            $result = preg_replace('/&lt;\!\-\- .* \-\-&gt;/', '', $result);
+        }
     }
 }
