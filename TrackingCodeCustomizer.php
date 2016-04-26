@@ -143,29 +143,32 @@ class TrackingCodeCustomizer extends \Piwik\Plugin
      */
     public function rewriteJavascriptFiles() {
         $trackingCodeFile = $this->getTrackingCodeFile();
-        $trackingCodeFileOriginal = $trackingCodeFile . ".original";
 
-        if(!file_exists($trackingCodeFileOriginal)) {
-            copy($trackingCodeFile, $trackingCodeFileOriginal);
+        if(is_writeable($trackingCodeFile)) {
+            $trackingCodeFileOriginal = $trackingCodeFile . ".original";
+
+            if (!file_exists($trackingCodeFileOriginal)) {
+                copy($trackingCodeFile, $trackingCodeFileOriginal);
+            }
+
+            $trackingCode = file_get_contents($trackingCodeFileOriginal);
+
+            $settings = $this->getSettings();
+
+            if (array_key_exists("paqVariable", $settings)) {
+                $trackingCode = str_replace("_paq", $settings["paqVariable"], $trackingCode);
+            }
+
+            if (array_key_exists("piwikJs", $settings)) {
+                $trackingCode = str_replace("piwik.js", $settings["piwikJs"], $trackingCode);
+            }
+
+            if (array_key_exists("piwikPhp", $settings)) {
+                $trackingCode = str_replace("piwik.php", $settings["piwikPhp"], $trackingCode);
+            }
+
+            file_put_contents($trackingCodeFile, $trackingCode);
         }
-
-        $trackingCode = file_get_contents($trackingCodeFileOriginal);
-
-        $settings = $this->getSettings();
-
-        if(array_key_exists("paqVariable", $settings)) {
-            $trackingCode = str_replace("_paq", $settings["paqVariable"], $trackingCode);
-        }
-
-        if(array_key_exists("piwikJs", $settings)) {
-            $trackingCode = str_replace("piwik.js", $settings["piwikJs"], $trackingCode);
-        }
-
-        if(array_key_exists("piwikPhp", $settings)) {
-            $trackingCode = str_replace("piwik.php", $settings["piwikPhp"], $trackingCode);
-        }
-
-        file_put_contents($trackingCodeFile, $trackingCode);
     }
 
     /**
