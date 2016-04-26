@@ -40,6 +40,7 @@ class TrackingCodeCustomizer extends \Piwik\Plugin
             'Piwik.getJavascriptCode' => 'applyTrackingCodeCustomizations',
             'Controller.CoreAdminHome.setPluginSettings.end' => 'rewriteJavascriptFiles',
             'API.SitesManager.getJavascriptTag.end' => 'rewriteJavascriptTag',
+            'Controller.SitesManager.siteWithoutData.end' => 'rewriteJavascriptTag',
             'CoreUpdater.update.end' => 'afterUpdate'
         );
     
@@ -188,8 +189,7 @@ class TrackingCodeCustomizer extends \Piwik\Plugin
         }
 
         if(array_key_exists("removePiwikBranding", $settings)) {
-            $result = preg_replace('/<!--(.|\s)*?-->/', '', $result);
-            $result = str_replace(" Piwik ", " Tracking ", $result);
+            $result = preg_replace('/&lt;\!\-\- .* \-\-&gt;/', '', $result);
         }
     }
 }
