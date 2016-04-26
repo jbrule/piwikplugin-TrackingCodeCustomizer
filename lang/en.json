@@ -15,10 +15,10 @@
         "httpsPiwikUrlSettingHelp":"Set if the HTTPS domain is different from the normal domain. Example: 'tracker.example.com/piwik' use hostname + basepath only (omit protocol and trailing slash)",
 
         "piwikJsSettingTitle": "piwik.js Filename",
-        "piwikJsSettingHelp": "Let's you customize the piwik.js Filename. This is useful to avoid detections by AdBlockers. Don't forget to create a rewrite rrule accordingly in your web-server configuration: RewriteRule \"^/p/p.(js|php)$\" \"/piwik/piwik.$1\" [PT,L]",
+        "piwikJsSettingHelp": "Let's you customize the piwik.js Filename. This is useful to avoid detections by AdBlockers. Don't forget to create a rewrite rule accordingly in your web-server configuration: RewriteRule \"^/p/p.(js|php)$\" \"/piwik/piwik.$1\" [PT,L]",
 
         "piwikPhpSettingTitle": "piwik.php Filename",
-        "piwikPhpSettingHelp": "Let's you customize the piwik.php Filename. This is useful to avoid detections by AdBlockers. Don't forget to create a rewrite rrule accordingly in your web-server configuration: RewriteRule \"^/p/p.(js|php)$\" \"/piwik/piwik.$1\" [PT,L]",
+        "piwikPhpSettingHelp": "Let's you customize the piwik.php Filename. This is useful to avoid detections by AdBlockers. Don't forget to create a rewrite rule accordingly in your web-server configuration: RewriteRule \"^/p/p.(js|php)$\" \"/piwik/piwik.$1\" [PT,L] Please note that changing the trackers filename needs to be addressed when using the log analyzer (use --replay-tracking-expected-tracker-file=yourfilename.php)",
 
         "paqVariableSettingTitle": "Name for _paq in Javascript tracking code",
         "paqVariableSettingHelp": "Let's you customize the _paq JS Variable in your tracking code. This can be useful to avoid issues with multiple Piwik tracking codes on the same page.",
