@@ -45,10 +45,11 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
     private function createIdSiteSetting(){
         return $this->makeSetting('idSite', $default = "", FieldConfig::TYPE_STRING, function (FieldConfig $field) {
             $field->title = $this->t('idSiteSettingTitle');
+            $field->introduction = $this->t('PluginDescription');
             $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
             $field->uiControlAttributes = array("size" => "6", "maxlength" => "8");
-            $field->description = $this->t('TitleSettingDescription');
-            $field->inlineHelp = sprintf('<br/>Probably not useful in most scenarios. The idSite option is included for completeness.<br/><br/>Default: %s',$this->t('TitleSettingDefault'));
+            $field->description = $this->t('idSiteSettingDescription');
+            $field->inlineHelp = sprintf('<br/>Probably not useful in most scenarios. The idSite option is included for completeness.<br/><br/>Default: %s',$this->t('idSiteSettingDefault'));
             $field->validate = function ($value, $setting) {
                 if ($value != "" && preg_match("/^[0-9]+$/",$value) !== 1) {
                 throw new \Exception('Value is invalid. Must be positive integer');
