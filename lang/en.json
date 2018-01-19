@@ -3,15 +3,21 @@
         "PluginDescription":"The provided values will replace the defaults in the generated tracking code (leave blank to use defaults). Viewing https://github.com/piwik/piwik/blob/master/core/Tracker/TrackerCodeGenerator.php is recommended to deconstruct how the tracking code is built.",
         "idSiteSettingTitle":"idSite",
         "idSiteSettingDescription":"The siteId that will be included in the tracking code.",
+        "idSiteSettingDefault":"Dependent on selected site.",
         "protocolSettingTitle":"protocol",
         "protocolSettingDescription":"Piwik url protocol.",
+        "protocolSettingDefault":"\"//\"",
         "piwikUrlSettingTitle":"piwikUrl",
-        "piwikUrlSettingDescription":"The tracker URL to use.",
+        "piwikUrlSettingDescription":"The tracker URL to use.\nDefault: Same as Matomo installation path",
+        "piwikUrlSettingDefault":"Same as Matomo installation path",
         "httpsPiwikUrlSettingTitle":"httpsPiwikUrl",
         "httpsPiwikUrlSettingDescription":"Set if the HTTPS domain is different from the normal domain.",
+        "httpsPiwikUrlSettingDefault":"Attempts to detect protocol and retrieves using piwikUrl.<br/>Note: Setting a value here will disable protocol checking and force https.",
         "optionsSettingTitle":"options",
         "optionsSettingDescription":"A string of JavaScript code that customizes the JavaScript tracker (after _paq = _paq || [] and before trackPageView).",
+        "optionsSettingDefault":"Empty",
         "optionsBeforeTrackerUrlSettingTitle":"optionsBeforeTrackerUrl",
-        "optionsBeforeTrackerUrlSettingDescription":"A string of Javascript code that customizes the JavaScript tracker inside of anonymous function before adding setTrackerUrl into paq."
+        "optionsBeforeTrackerUrlSettingDescription":"A string of Javascript code that customizes the JavaScript tracker inside of anonymous function before adding setTrackerUrl into paq.",
+        "optionsBeforeTrackerUrlSettingDefault":"Empty"
     }
 }

@@ -75,9 +75,7 @@ class TrackingCodeCustomizer extends \Piwik\Plugin
         
         $originalSysparams = $sysparams;
         
-        $settings = API::getInstance();
-        
-        $storedSettings = $settings->getSettings();
+        $storedSettings = $this->getSettings();
         
         if(array_key_exists("options", $storedSettings))
                 $storedSettings["options"] .= $sysparams["options"];
@@ -92,6 +90,27 @@ class TrackingCodeCustomizer extends \Piwik\Plugin
             $sysparams[$key] =  $this->replaceTokens($value,$originalSysparams,$sysparams);
         }
     
+    }
+    
+    private function getSettings()
+    {
+        $outParams = array();
+        
+        $params = array("idSite","piwikUrl","options","optionsBeforeTrackerUrl","httpsPiwikUrl","protocol");
+        
+        $settings = new SystemSettings();
+        
+        //print_r($settings);
+        //end();
+        
+        foreach($params as $param){
+            
+            $value = $settings->{$param}->getValue();
+            if(!empty($value))
+                $outParams[$param] = $value;
+        }
+                
+        return $outParams;
     }
     
     private function replaceTokens($subject,$originalSysparams,$sysparams){
