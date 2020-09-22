@@ -37,7 +37,7 @@ namespace Piwik\Plugins\TrackingCodeCustomizer;
 class TrackingCodeCustomizer extends \Piwik\Plugin
 {
     private static $hooks = array(
-            'Piwik.getJavascriptCode' => 'applyTrackingCodeCustomizations'
+            'Tracker.getJavascriptCode' => 'applyTrackingCodeCustomizations'
         );
     
     public function registerEvents()
