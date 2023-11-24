@@ -1,10 +1,4 @@
 <?php
-/**
- * Piwik - free/libre analytics platform
- *
- * @link http://piwik.org
- * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- */
 
 namespace Piwik\Plugins\TrackingCodeCustomizer;
 
@@ -80,7 +74,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
             //$field->uiControlAttributes = array("size"=> 65);
             $field->description = $this->t('piwikUrlSettingDescription');
-            $field->inlineHelp = sprintf('<br/>tracker.example.com/piwik use hostname+basepath only (omit protocol and trailing slash)<br/><br/>Default: %s',$this->t('piwikUrlSettingDefault'));
+            $field->inlineHelp = sprintf('<br/>tracker.example.com/matomo use hostname+basepath only (omit protocol and trailing slash)<br/><br/>Default: %s',$this->t('piwikUrlSettingDefault'));
         });
     }
     
@@ -90,7 +84,7 @@ class SystemSettings extends \Piwik\Settings\Plugin\SystemSettings
             $field->uiControl = FieldConfig::UI_CONTROL_TEXT;
             //$field->uiControlAttributes = array("size"=> 65);
             $field->description = $this->t('httpsPiwikUrlSettingDescription');
-            $field->inlineHelp = sprintf('<br/>secure-tracker.example.com/piwik use hostname+basepath only (omit protocol and trailing slash)<br/><br/>Default: %s',$this->t('httpsPiwikUrlSettingDefault'));
+            $field->inlineHelp = sprintf('<br/>secure-tracker.example.com/matomo use hostname+basepath only (omit protocol and trailing slash)<br/><br/>Default: %s',$this->t('httpsPiwikUrlSettingDefault'));
             
         });
     }
